@@ -1,12 +1,32 @@
 import React, { useState, useEffect } from "react";
 import Matrix from "./matrix";
+import { elements } from "./elements";
 import "./App.css";
+import { toGrid, shuffle } from "./helpers";
 
 function App() {
+  const [win, setWin] = useState(false);
   const [selected, setSelected] = useState([]);
   const [guessed, setGuessed] = useState([]);
-
+  const [level, setLevel] = useState(1);
+  const [list, setList] = useState(
+    toGrid(
+      shuffle([...Array.from(Array(2).keys()), ...Array.from(Array(2).keys())])
+    )
+  );
   useEffect(() => {
+    console.log("guessed.length", guessed.length);
+
+    if (guessed.length === level + 1) {
+      setGuessed([]);
+      setSelected([]);
+      if (guessed.length < elements.length) {
+        setLevel(level + 1);
+        setList(generateLevel(level + 2));
+      } else {
+        setWin(true);
+      }
+    }
     if (selected.length > 1) {
       if (
         list[selected[0][0]][selected[0][1]] ===
@@ -21,12 +41,14 @@ function App() {
     }
   }, [selected]);
 
-  let list = [
-    [1, 8, 6, 4],
-    [7, 2, 3, 5],
-    [5, 3, 7, 2],
-    [4, 6, 8, 1]
-  ];
+  let generateLevel = level =>
+    toGrid(
+      shuffle([
+        ...Array.from(Array(level).keys()),
+        ...Array.from(Array(level).keys())
+      ])
+    );
+
   let viewList = list.map((row, rowIndex) => {
     return row.map((cell, index) => {
       return {
@@ -44,7 +66,6 @@ function App() {
       };
     });
   });
-  console.log(viewList);
   let params = {
     childs: {
       styles: {
@@ -52,19 +73,29 @@ function App() {
       }
     }
   };
-  return (
+  return win ? (
+    <h1>GANASTE!</h1>
+  ) : (
     <>
       <header>
         <h1>MemoFran</h1>
+        <h2>Nivel: {level}</h2>
       </header>
-      <main>
+      <main
+        style={{
+          width: (99 * list[0].length) / list.length + "vmin",
+          maxWidth: (700 * list[0].length) / list.length + "px"
+        }}
+      >
         <Matrix list={viewList} params={params} onSelect={onSelect} />
       </main>
     </>
   );
   function onSelect(row, cell) {
-    let newSelection = [...selected, [row, cell]];
-    setSelected(newSelection);
+    if (selected.length < 2) {
+      let newSelection = [...selected, [row, cell]];
+      setSelected(newSelection);
+    }
   }
 }
 

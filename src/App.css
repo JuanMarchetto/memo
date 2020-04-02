@@ -8,9 +8,7 @@ body {
   padding: 0;
 }
 main {
-  width: 99vmin;
   height: 99vmin;
-  max-width: 700px;
   max-height: 700px;
   border: 2px solid #ccc;
   display: block;
@@ -20,8 +18,13 @@ main * {
   max-width: 100%;
   height: auto;
 }
-h1 {
+h1,
+h2 {
   display: block;
   width: fit-content;
   margin: auto;
+}
+
+h2 {
+  color: blue;
 }
