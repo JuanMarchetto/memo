@@ -18,7 +18,7 @@ function App() {
     if (guessed.length === level + 1) {
       setGuessed([]);
       setSelected([]);
-      if (guessed.length === elements.length) {
+      if (guessed.length < elements.length) {
         setLevel(level + 1);
         setList(generateLevel(level + 2));
       } else {
