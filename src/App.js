@@ -76,7 +76,7 @@ function App() {
   ) : (
     <>
       <header>
-        <h1>MemoFran</h1>
+        <h1>Memo</h1>
         <h2>Nivel: {level}</h2>
       </header>
       <main
