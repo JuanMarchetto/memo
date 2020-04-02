@@ -1,10 +1,15 @@
 export const elements = [
-  "fran1.jpeg",
-  "fran2.jpeg",
-  "fran3.jpeg",
-  "fran4.jpeg",
-  "fran5.jpeg",
-  "fran6.jpeg",
-  "fran7.jpeg",
-  "fran8.jpeg"
+  "img/fran0.jpeg",
+  "img/fran1.jpeg",
+  "img/fran2.jpeg",
+  "img/fran3.jpeg",
+  "img/fran4.jpeg",
+  "img/fran5.jpeg",
+  "img/fran6.jpeg",
+  "img/fran7.jpeg",
+  "img/fran8.jpeg",
+  "img/fran9.jpeg",
+  "img/fran10.jpeg",
+  "img/fran11.jpeg",
+  "img/fran12.jpeg"
 ];

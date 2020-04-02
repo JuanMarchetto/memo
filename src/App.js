@@ -15,12 +15,10 @@ function App() {
     )
   );
   useEffect(() => {
-    console.log("guessed.length", guessed.length);
-
     if (guessed.length === level + 1) {
       setGuessed([]);
       setSelected([]);
-      if (guessed.length < elements.length) {
+      if (guessed.length === elements.length) {
         setLevel(level + 1);
         setList(generateLevel(level + 2));
       } else {
@@ -60,7 +58,7 @@ function App() {
                 (el[0][0] === rowIndex && el[0][1] === index) ||
                 (el[1][0] === rowIndex && el[1][1] === index)
             )
-              ? 'url("fran' + list[rowIndex][index] + '.jpeg") no-repeat'
+              ? 'url("' + elements[list[rowIndex][index]] + '") no-repeat'
               : "red"
         }
       };
