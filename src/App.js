@@ -68,7 +68,8 @@ function App() {
     childs: {
       styles: {
         border: "2px solid black"
-      }
+      },
+      onClick: onSelect
     }
   };
   return win ? (
@@ -76,7 +77,7 @@ function App() {
   ) : (
     <>
       <header>
-        <h1>Memo</h1>
+        <h1>Memo Rayuela</h1>
         <h2>Nivel: {level}</h2>
       </header>
       <main
@@ -85,7 +86,7 @@ function App() {
           maxWidth: (700 * list[0].length) / list.length + "px"
         }}
       >
-        <Matrix list={viewList} params={params} onSelect={onSelect} />
+        <Matrix list={viewList} params={params} />
       </main>
     </>
   );
