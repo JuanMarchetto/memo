@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Matrix from "./matrix";
+import Matrix from "matrix-component";
 import { elements } from "./elements";
 import "./App.css";
 import { toGrid, shuffle } from "./helpers";
@@ -9,6 +9,7 @@ function App() {
   const [selected, setSelected] = useState([]);
   const [guessed, setGuessed] = useState([]);
   const [level, setLevel] = useState(1);
+  const maxLevel = 10;
   const [list, setList] = useState(
     toGrid(
       shuffle([...Array.from(Array(2).keys()), ...Array.from(Array(2).keys())])
@@ -18,7 +19,7 @@ function App() {
     if (guessed.length === level + 1) {
       setGuessed([]);
       setSelected([]);
-      if (guessed.length < elements.length) {
+      if (guessed.length < elements.length && level < maxLevel) {
         setLevel(level + 1);
         setList(generateLevel(level + 2));
       } else {
@@ -39,11 +40,11 @@ function App() {
     }
   }, [selected]);
 
-  let generateLevel = level =>
+  let generateLevel = (level) =>
     toGrid(
       shuffle([
         ...Array.from(Array(level).keys()),
-        ...Array.from(Array(level).keys())
+        ...Array.from(Array(level).keys()),
       ])
     );
 
@@ -52,25 +53,25 @@ function App() {
       return {
         styles: {
           background:
-            selected.some(el => el[0] === rowIndex && el[1] === index) ||
+            selected.some((el) => el[0] === rowIndex && el[1] === index) ||
             guessed.some(
-              el =>
+              (el) =>
                 (el[0][0] === rowIndex && el[0][1] === index) ||
                 (el[1][0] === rowIndex && el[1][1] === index)
             )
               ? 'url("' + elements[list[rowIndex][index]] + '") no-repeat'
-              : "red"
-        }
+              : "red",
+        },
       };
     });
   });
   let params = {
     childs: {
       styles: {
-        border: "2px solid black"
+        border: "2px solid black",
       },
-      onClick: onSelect
-    }
+      onClick: onSelect,
+    },
   };
   return win ? (
     <h1>GANASTE!</h1>
@@ -83,7 +84,7 @@ function App() {
       <main
         style={{
           width: (99 * list[0].length) / list.length + "vmin",
-          maxWidth: (700 * list[0].length) / list.length + "px"
+          maxWidth: (700 * list[0].length) / list.length + "px",
         }}
       >
         <Matrix list={viewList} params={params} />
