@@ -58,14 +58,16 @@ function App() {
 
   let viewList = list.map((row, rowIndex) => {
     return row.map((cell, index) => {
-      return {
-        styles: {
-          background: fliped(rowIndex, index)
-            ? 'url("' + elements[list[rowIndex][index]] + '") no-repeat'
-            : "red",
-        },
-        onClick: fliped(rowIndex, index) ? undefined : onSelect,
-      };
+      if (fliped(rowIndex, index)) {
+        return {
+          styles: {
+            background: 'url("' + elements[list[rowIndex][index]] + '")',
+          },
+          onClick: undefined,
+        };
+      } else {
+        return { styles: { background: "red" }, onClick: onSelect };
+      }
     });
   });
   let params = {
