@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Matrix from "matrix-component";
+import Matrix, { toGrid } from "matrix-component";
 import { elements } from "./elements";
 import "./App.css";
-import { toGrid, shuffle } from "./helpers";
+import { shuffle } from "./helpers";
 
 function App() {
   const [win, setWin] = useState(false);
