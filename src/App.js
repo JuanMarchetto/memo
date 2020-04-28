@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Matrix, { toGrid } from "matrix-component";
-import { elements } from "./elements";
+import { elements, name, maxLevel } from "./elements";
 import "./App.css";
 import { shuffle } from "./helpers";
 
@@ -9,13 +9,13 @@ function App() {
   const [selected, setSelected] = useState([]);
   const [guessed, setGuessed] = useState([]);
   const [level, setLevel] = useState(1);
-  const maxLevel = 10;
   const [list, setList] = useState(
     toGrid(
       shuffle([...Array.from(Array(2).keys()), ...Array.from(Array(2).keys())])
     )
   );
   useEffect(() => {
+    document.title = name;
     if (guessed.length === level + 1) {
       setGuessed([]);
       setSelected([]);
@@ -48,20 +48,23 @@ function App() {
       ])
     );
 
+  let fliped = (rowIndex, index) =>
+    selected.some((el) => el[0] === rowIndex && el[1] === index) ||
+    guessed.some(
+      (el) =>
+        (el[0][0] === rowIndex && el[0][1] === index) ||
+        (el[1][0] === rowIndex && el[1][1] === index)
+    );
+
   let viewList = list.map((row, rowIndex) => {
     return row.map((cell, index) => {
       return {
         styles: {
-          background:
-            selected.some((el) => el[0] === rowIndex && el[1] === index) ||
-            guessed.some(
-              (el) =>
-                (el[0][0] === rowIndex && el[0][1] === index) ||
-                (el[1][0] === rowIndex && el[1][1] === index)
-            )
-              ? 'url("' + elements[list[rowIndex][index]] + '") no-repeat'
-              : "red",
+          background: fliped(rowIndex, index)
+            ? 'url("' + elements[list[rowIndex][index]] + '") no-repeat'
+            : "red",
         },
+        onClick: fliped(rowIndex, index) ? undefined : onSelect,
       };
     });
   });
@@ -70,15 +73,21 @@ function App() {
       styles: {
         border: "2px solid black",
       },
-      onClick: onSelect,
     },
   };
   return win ? (
-    <h1>GANASTE!</h1>
+    <>
+      <h1>GANASTE!</h1>
+      <img
+        className="win"
+        src={elements[Math.floor(Math.random() * elements.length)]}
+        alt="ganaste"
+      />
+    </>
   ) : (
     <>
       <header>
-        <h1>Memo Rayuela</h1>
+        <h1>{name}</h1>
         <h2>Nivel: {level}</h2>
       </header>
       <main
